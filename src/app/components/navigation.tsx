@@ -106,10 +106,7 @@ export default function Navigation() {
         </ul>
       </div>
       <div className="navbar-end">
-        <a
-          className="btn"
-          onClick={() => document.getElementById("my_modal_5").showModal()}
-        >
+        <a className="btn" href="https://github.com/vinaykharayat/chain-event">
           <svg
             className="w-4 h-4 mr-2"
             aria-hidden="true"
