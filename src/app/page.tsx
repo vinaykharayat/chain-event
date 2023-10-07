@@ -1,16 +1,29 @@
 "use client";
-import { WagmiConfig } from "wagmi";
+import { WagmiConfig, sepolia } from "wagmi";
 import Form from "./components/form";
-import config from "./providers/config";
+// import config from "./providers/config";
 import EventTable from "./components/eventTable";
 import { useMemo, useState } from "react";
 import Navigation from "./components/navigation";
+import { configureChains, createConfig, mainnet } from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
 
 export default function Home() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Object[]>([]);
+
+  const { chains, publicClient, webSocketPublicClient } = configureChains(
+    [mainnet, sepolia],
+    [publicProvider()]
+  );
+
+  const config = createConfig({
+    autoConnect: true,
+    publicClient,
+    webSocketPublicClient,
+  });
 
   const memoizedUpdateTableData = useMemo(() => {
-    return (newData) => {
+    return (newData: Object) => {
       setData([...data, newData]);
     };
   }, [data]);

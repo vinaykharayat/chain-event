@@ -1,0 +1,15 @@
+import { configureChains, createConfig, mainnet, sepolia } from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
+
+const { publicClient, webSocketPublicClient } = configureChains(
+  [sepolia, mainnet],
+  [publicProvider()]
+);
+
+const config = createConfig({
+  autoConnect: true,
+  publicClient,
+  webSocketPublicClient,
+});
+
+export default config;

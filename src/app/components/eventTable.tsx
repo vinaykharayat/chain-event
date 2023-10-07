@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
+import IUniswap from "../interfaces/IUniswap";
 
 export default function EventTable({ updateTableData }) {
-  const [tableData, setTableData] = useState([]);
-
   useEffect(() => {
     console.log("updateTableData", updateTableData);
-    setTableData(updateTableData);
   }, [updateTableData]);
-
   return (
     <div className="w-full relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -34,20 +31,21 @@ export default function EventTable({ updateTableData }) {
           </tr>
         </thead>
         <tbody>
-          {tableData.map((row) => (
-            <tr
-              id="log-row"
-              key={row.id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-            >
-              <td className="px-6 py-4">{row.poolAddress}</td>
-              <td className="px-6 py-4">{row.amountTokenA}</td>
-              <td className="px-6 py-4">{row.amountTokenB}</td>
-              <td className="px-6 py-4">{row.blockNumber}</td>
-              <td className="px-6 py-4">{row.eventName}</td>
-              <td className="px-6 py-4">{row.transactionHash}</td>
-            </tr>
-          ))}
+          {updateTableData &&
+            updateTableData.map((row: IUniswap) => (
+              <tr
+                id="log-row"
+                key={row.id}
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              >
+                <td className="px-6 py-4">{row.poolAddress}</td>
+                <td className="px-6 py-4">{row.amountTokenA}</td>
+                <td className="px-6 py-4">{row.amountTokenB}</td>
+                <td className="px-6 py-4">{row.blockNumber}</td>
+                <td className="px-6 py-4">{row.eventName}</td>
+                <td className="px-6 py-4">{row.transactionHash}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
 
