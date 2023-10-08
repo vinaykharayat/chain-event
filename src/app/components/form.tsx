@@ -1,4 +1,11 @@
-import { FormEvent, FormEventHandler, useEffect, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  FormEventHandler,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { mainnet, sepolia, useContractEvent, useContractRead } from "wagmi";
 import getAbi from "../utils/getAbi";
 import { setTimeout } from "timers";
@@ -7,8 +14,12 @@ import IUniswap from "../interfaces/IUniswap";
 
 export default function Form({
   memoizedUpdateTableData,
+  setShowErrorAlert,
+  setErrorMessage,
 }: {
   memoizedUpdateTableData: (newData: IUniswap) => void;
+  setShowErrorAlert: Dispatch<SetStateAction<boolean>>;
+  setErrorMessage: Dispatch<SetStateAction<string>>;
 }) {
   const [tokenA, setTokenA] = useState<string>("");
   const [tokenB, setTokenB] = useState<string>(
@@ -35,6 +46,18 @@ export default function Form({
     chainId: chainId,
     onSuccess(data) {
       console.log("poolAddress", data);
+      if (data == 0x0) {
+        setButtonText("Start Listening");
+        setIsDisabled(false);
+        setShowErrorAlert(true);
+        setErrorMessage(
+          "Pool address not found, make sure token addresses, selected chain and pool fees are correct!"
+        );
+
+        setTimeout(function () {
+          setShowErrorAlert(false);
+        }, 10000);
+      }
       setPoolAddress(data);
     },
     onError(error) {
@@ -55,12 +78,24 @@ export default function Form({
   useEffect(() => {
     if (poolAddress) {
       const timer = setTimeout(() => {
-        getAbi(poolAddress, networkType).then((value) => {
-          setPoolAbi(value);
-          console.log("poolAbi", value);
-          console.log("eventype", event);
-          setButtonText("Listening started...");
-        });
+        getAbi(poolAddress, networkType)
+          .then((value) => {
+            setPoolAbi(value);
+            console.log("poolAbi", value);
+            console.log("eventype", event);
+            setButtonText("Listening started...");
+          })
+          .catch((error) => {
+            console.error(error);
+            setButtonText("Start Listening");
+            setIsDisabled(false);
+            setShowErrorAlert(true);
+            setErrorMessage(error.message);
+
+            setTimeout(function () {
+              setShowErrorAlert(false);
+            }, 10000);
+          });
       }, 5000); // Wait for 5 seconds.
       return () => clearTimeout(timer); // Clear the timeout when the component unmounts.
     }
@@ -107,8 +142,15 @@ export default function Form({
     e.preventDefault();
     setButtonText("Processing...");
     setIsDisabled(true);
-    const factoryAbi = await getAbi(uniswapFactoryAddress, networkType);
-    setUniswapFactoryAbi(factoryAbi);
+    getAbi(uniswapFactoryAddress, networkType)
+      .then((value) => {
+        setUniswapFactoryAbi(value);
+      })
+      .catch((error) => {
+        console.error(error);
+        setButtonText("Start Listening");
+        setIsDisabled(false);
+      });
   };
 
   return (
@@ -125,6 +167,7 @@ export default function Form({
               setTokenA(e.target.value);
             }}
             value={tokenA}
+            required
           />
         </div>
         <div>
@@ -139,6 +182,7 @@ export default function Form({
               setTokenB(e.target.value);
             }}
             value={tokenB}
+            required
           />
         </div>
       </div>
