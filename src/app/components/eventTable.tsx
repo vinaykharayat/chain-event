@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import IUniswap from "../interfaces/IUniswap";
 
-export default function EventTable({ updateTableData }) {
+export default function EventTable({
+  updateTableData,
+}: {
+  updateTableData: IUniswap[];
+}) {
   useEffect(() => {
     console.log("updateTableData", updateTableData);
   }, [updateTableData]);

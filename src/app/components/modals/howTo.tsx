@@ -20,7 +20,9 @@ export default function HowToModal() {
             </li>
             <li className="list-item">Select the network type</li>
             <li className="list-item">Select the pool fees</li>
-            <li className="list-item">Click on "Start listening" button</li>
+            <li className="list-item">
+              Click on <q>Start listening</q> button
+            </li>
           </ol>
         </div>
         <div className="modal-action">

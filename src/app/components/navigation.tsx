@@ -28,7 +28,13 @@ export default function Navigation() {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a onClick={() => document.getElementById("how-to").showModal()}>
+              <a
+                onClick={() =>
+                  (
+                    document.getElementById("how-to") as HTMLDialogElement
+                  ).showModal()
+                }
+              >
                 How to
               </a>
             </li>
@@ -49,7 +55,11 @@ export default function Navigation() {
             <li>
               <a
                 onClick={() =>
-                  document.getElementById("about-chain-event").showModal()
+                  (
+                    document.getElementById(
+                      "about-chain-event"
+                    ) as HTMLDialogElement
+                  ).showModal()
                 }
               >
                 About chain event
@@ -58,7 +68,11 @@ export default function Navigation() {
 
             <li>
               <a
-                onClick={() => document.getElementById("about-me").showModal()}
+                onClick={() =>
+                  (
+                    document.getElementById("about-me") as HTMLDialogElement
+                  ).showModal()
+                }
               >
                 Contact
               </a>
@@ -70,7 +84,13 @@ export default function Navigation() {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a onClick={() => document.getElementById("how-to").showModal()}>
+            <a
+              onClick={() =>
+                (
+                  document.getElementById("how-to") as HTMLDialogElement
+                ).showModal()
+              }
+            >
               How to
             </a>
           </li>
@@ -91,7 +111,11 @@ export default function Navigation() {
           <li>
             <a
               onClick={() =>
-                document.getElementById("about-chain-event").showModal()
+                (
+                  document.getElementById(
+                    "about-chain-event"
+                  ) as HTMLDialogElement
+                ).showModal()
               }
             >
               About chain event
@@ -99,7 +123,13 @@ export default function Navigation() {
           </li>
 
           <li>
-            <a onClick={() => document.getElementById("about-me").showModal()}>
+            <a
+              onClick={() =>
+                (
+                  document.getElementById("about-me") as HTMLDialogElement
+                ).showModal()
+              }
+            >
               Contact
             </a>
           </li>

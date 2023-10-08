@@ -3,8 +3,13 @@ import { mainnet, sepolia, useContractEvent, useContractRead } from "wagmi";
 import getAbi from "../utils/getAbi";
 import { setTimeout } from "timers";
 import { formatEther } from "viem";
+import IUniswap from "../interfaces/IUniswap";
 
-export default function Form({ memoizedUpdateTableData }) {
+export default function Form({
+  memoizedUpdateTableData,
+}: {
+  memoizedUpdateTableData: (newData: IUniswap) => void;
+}) {
   const [tokenA, setTokenA] = useState<string>("");
   const [tokenB, setTokenB] = useState<string>(
     "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14"
@@ -23,7 +28,7 @@ export default function Form({ memoizedUpdateTableData }) {
   const [chainId, setChainId] = useState<number>(mainnet.id);
 
   const getPoolFunc = useContractRead({
-    address: uniswapFactoryAddress,
+    address: uniswapFactoryAddress as `0x${string}`,
     abi: uniswapFactoryAbi,
     functionName: "getPool",
     args: [tokenA, tokenB, poolFee],
@@ -82,9 +87,9 @@ export default function Form({ memoizedUpdateTableData }) {
     address: poolAddress,
     abi: poolAbi,
     eventName: event,
-    listener(log) {
+    listener(log: any[]) {
       console.log("Event:", log);
-      const data = {
+      const data: IUniswap = {
         id: log[0].logIndex,
         poolAddress: log[0].address,
         amountTokenA: formatEther(log[0].args.amount0, "wei"),

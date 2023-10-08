@@ -7,11 +7,12 @@ import { useMemo, useState } from "react";
 import Navigation from "./components/navigation";
 import { configureChains, createConfig, mainnet } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
+import IUniswap from "./interfaces/IUniswap";
 
 export default function Home() {
-  const [data, setData] = useState<Object[]>([]);
+  const [data, setData] = useState<IUniswap[]>([]);
 
-  const { chains, publicClient, webSocketPublicClient } = configureChains(
+  const { publicClient, webSocketPublicClient } = configureChains(
     [mainnet, sepolia],
     [publicProvider()]
   );
@@ -22,8 +23,8 @@ export default function Home() {
     webSocketPublicClient,
   });
 
-  const memoizedUpdateTableData = useMemo(() => {
-    return (newData: Object) => {
+  const memoizedUpdateTableData: (newData: IUniswap) => void = useMemo(() => {
+    return (newData: IUniswap) => {
       setData([...data, newData]);
     };
   }, [data]);
