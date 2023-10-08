@@ -95,6 +95,7 @@ export default function Form({ memoizedUpdateTableData }) {
       };
       memoizedUpdateTableData(data);
     },
+    chainId: chainId,
   });
 
   const handleFormSubmit = async (e: FormEvent) => {
