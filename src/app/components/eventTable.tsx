@@ -53,7 +53,7 @@ export default function EventTable({
         </tbody>
       </table>
 
-      <div
+      {/* <div
         id="editUserModal"
         tabIndex={-1}
         aria-hidden="true"
@@ -235,7 +235,7 @@ export default function EventTable({
             </div>
           </form>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
