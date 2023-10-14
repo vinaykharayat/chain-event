@@ -254,8 +254,8 @@ export default function Form({
           />
         </svg>
         <span>
-          Get ABI API of Etherscan Mainnet is not working, so this project won't
-          work as intended for mainnet!
+          Get ABI API of Etherscan Mainnet is not working, so this project would
+          not work as intended for mainnet!
         </span>
       </div>
       <button
