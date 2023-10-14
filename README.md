@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Chain Event
+Chain Event is the project to listen to EVM based blockchain event in real time!
+Currently Chain Event only supports Uniswap pool add liquidity events on Ethereum Mainnet/Sepolia.
+
+PRs/Bug Reports are welcome!
 
 ## Getting Started
 
